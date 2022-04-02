@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
     exit(EXIT_SUCCESS);
   }
 
-  int gpumethod = 1;
+  int gpumethod = 2;
   if (checkCmdLineFlag(argc, (const char **)argv, "gpumethod")) {
     gpumethod = getCmdLineArgumentInt(argc, (const char **)argv, "gpumethod");
 
@@ -154,12 +154,15 @@ int main(int argc, char **argv) {
 
   double sumGPU = 0.0;
   if (gpumethod == 0) {
+    printf("Launching JacobiMethodGpuCudaGraphExecKernelSetParams\n");
     sumGPU = JacobiMethodGpuCudaGraphExecKernelSetParams(
         d_A, d_b, conv_threshold, max_iter, d_x, d_x_new, stream1);
   } else if (gpumethod == 1) {
+    printf("Launching JacobiMethodGpuCudaGraphExecUpdate\n");
     sumGPU = JacobiMethodGpuCudaGraphExecUpdate(
         d_A, d_b, conv_threshold, max_iter, d_x, d_x_new, stream1);
   } else if (gpumethod == 2) {
+    printf("Launching JacobiMethodGpu\n");
     sumGPU = JacobiMethodGpu(d_A, d_b, conv_threshold, max_iter, d_x, d_x_new,
                              stream1);
   }
